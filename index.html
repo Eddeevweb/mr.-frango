@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meat Lovers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 150px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #e0e0e0;
+        }
+
+        .hero {
+            height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1562967916-eb82221dfb92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y29jb251dCtjaGlja2VufHx8fHx8MTY5NzUyMjIwNQ&ixlib=rb-4.0.3&q=80');
+            
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards 0.7s;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: transparent;
+            color: #fff;
+            padding: 12px 24px;
+            border: 2px solid #fff;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards 0.9s;
+            border-radius: 30px;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .about {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-text {
+            flex: 1;
+            padding-right: 50px;
+        }
+
+        .about-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .floating-leaf {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            opacity: 0.7;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .leaf1 {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .leaf2 {
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .leaf3 {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+       /* New styles for the menu carousel */
+       .menu {
+            background-color: #f3f4f6;
+            background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sabornamesa.com.br%2Freceita-de-carnes%2Fguisado&psig=AOvVaw2F2jUglKI1L0kdi3f8T4Vn&ust=1729427320857000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKjnyP64mokDFQAAAAAdAAAAABAE');
+            padding: 4rem 0;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .menu h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.25rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #000;
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-item {
+            flex: 0 0 100%;
+            padding: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .menu-item {
+                flex: 0 0 33.333%;
+            }
+        }
+
+        .menu-item-content {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item-body {
+            padding: 1rem;
+        }
+
+        .menu-item h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
+        .menu-item p {
+            color: #4b5563;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .menu-item-price {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .menu-item-button {
+            background-color: #000;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item-button:hover {
+            background-color: #333;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-button-prev {
+            left: 1rem;
+        }
+
+        .carousel-button-next {
+            right: 1rem;
+        }
+        
+
+        .events {
+            padding: 100px 0;
+            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8d2luZXx8fHx8fDE2ODY3NjA3OTM&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        
+
+        .events::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .events-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .events h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .events p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+        }
+
+        .booking {
+            padding: 100px 0;
+            background-color: #111;
+        }
+
+        .booking h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .booking-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .booking-image {
+            flex: 1;
+            margin-right: 50px;
+        }
+
+        .booking-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .booking-form {
+            flex: 1;
+        }
+
+        .booking-form form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .booking-form input,
+        .booking-form select {
+            width: 100%;
+            padding: 10px;
+            background-color: #222;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .booking-form button {
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .booking-form button:hover {
+            background-color: #e0e0e0;
+        }
+
+        footer {
+            background-color: #111;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            width: 200px;
+            height: auto;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #e0e0e0;
+        }
+
+        .footer-social a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: #e0e0e0;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .parallax {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .parallax span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            animation: move 25s infinite linear;
+            transition: 0.5s;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(100vh) scale(0);
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                margin-top: 20px;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-right: 20px;
+            }
+
+            .hero h2 {
+                font-size: 48px;
+            }
+
+            .about-content,
+            .booking-content {
+                flex-direction: column;
+            }
+
+            .about-text,
+            .booking-image {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .footer-logo,
+            .footer-links,
+            .footer-social {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="imagens/logo3 mrfrango.png" alt="Logo mrfrango">
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#menu">Menú</a></li>
+                        
+                        <li><a href="#events">Eventos</a></li>
+                        <li><a href="#booking">Reservas</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="parallax"></div>
+            <div class="hero-content">
+                <h2>O Melhor<br>Frango</h2>
+                <p>+258 84 504 6666</p>
+                <a href="#booking" class="btn">Reservas Online</a>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Sobre nós</h3>
+                        <p>Bem-vindo ao Mr. Frango, onde a paixão pela comida se encontra com a tradição! Somos um restaurante que celebra o sabor e a qualidade, oferecendo pratos irresistíveis de frango grelhado e outras delícias que farão seu paladar dançar.</p>
+                        <p>Nossa missão é proporcionar uma experiência gastronômica excepcional a cada visita. Usamos apenas ingredientes frescos e de alta qualidade, preparados com amor e dedicação. Se você está buscando uma refeição saborosa para levar ou um lugar acolhedor para compartilhar com amigos e familiares, o Mr. Frango é o lugar certo para você!</p>
+                        <p>Venha nos visitar e descubra o verdadeiro sabor do frango. Esperamos vê-lo em breve!</p>
+                        <a href="2.html" class="btn">Ler mais</a>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdHx8fHx8fDE2ODY3NjA5MDE&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" alt="About Meat Lovers">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+ 
+        <section id="menu" class="menu">
+            <div class="container">
+                <h3>Menú</h3>
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Z3JlZWsrc2FsYWR8fHx8fHwxNjg2NzYyNTEx&ixlib=rb-4.0.3&q=80&w=1080" alt="Salada Grega">
+                                <div class="menu-item-body">
+                                    <h4>Salada Grega</h4>
+                                    <p>Legumes frescos, queijo feta suculento, azeite de oliva</p>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <span class="menu-item-price">MZN 25,00</span>
+                                    <button class="menu-item-button">Pedir</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y2Flc2FyK3NhbGFkfHx8fHx8MTY4Njc2MjUzOA&ixlib=rb-4.0.3&q=80&w=1080" alt="Salada Caesar com Frango">
+                                <div class="menu-item-body">
+                                    <h4>Salada Caesar com Frango</h4>
+                                    <p>Folhas crocantes de alface, peito de frango tenro, molho Caesar</p>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <span class="menu-item-price">MZN 28,00</span>
+                                    <button class="menu-item-button">Pedir</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <img src="https://images.unsplash.com/photo-1547496502-affa22d38842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZHVjaytzYWxhZHx8fHx8fDE2ODY3NjI1NjA&ixlib=rb-4.0.3&q=80&w=1080" alt="Salada Pato de Pequim">
+                                <div class="menu-item-body">
+                                    <h4>Salada Pato de Pequim</h4>
+                                    <p>Pato à Pequim, legumes frescos, molho picante</p>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <span class="menu-item-price">MZN 32,00</span>
+                                    <button class="menu-item-button">Pedir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-button carousel-button-prev">&lt;</button>
+                    <button class="carousel-button carousel-button-next">&gt;</button>
+                </div>
+            </div>
+        </section>
+
+
+
+       
+       
+
+
+
+
+
+        <section id="events" class="events">
+            <div class="container">
+                <div class="events-content">
+                    <h3>Eventos</h3>
+                    <p>No Mr. Frango, acreditamos que cada refeição deve ser uma celebração! Por isso, estamos sempre planejando eventos especiais para trazer nossos clientes juntos em torno da boa comida e momentos inesquecíveis.</p>
+                    <a href="#" class="btn">Ver próximos eventos</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="booking" class="booking">
+            <div class="container">
+                <h3>Reserve Sua Mesa</h3>
+                <div class="booking-content">
+                    <div class="booking-image">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2ODY3NjEwNDc&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" alt="Restaurant interior">
+                    </div>
+                    <div class="booking-form">
+                        <form>
+                            <input type="text" placeholder="Nome" required>
+                            <input type="email" placeholder="Email" required>
+                            <input type="tel" placeholder="Celular" required>
+                            <input type="date" required>
+                            <input type="time" required>
+                            <input type="number" placeholder="Número de convidados" required>
+                            <select required>
+                                <option value="">Complexo</option>
+                                <option value="1">Complexo da Ponta-gêa</option>
+                                <option value="2">Complexo dos Pioneiros</option>
+                                <option value="3">Complexo da Baixa</option>
+                            </select>
+                            <button type="submit">Reservar Agora</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="imagens/logo3 mrfrango.png" alt="Logo mrfrango">
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Início</a>
+                    <a href="#about">Sobre</a>
+                    <a href="#menu">Menú</a>
+                    <a href="#events">Eventos</a>
+                    <a href="#booking">Reservas</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook">F</a>
+                    <a href="#" aria-label="Instagram">I</a>
+                    <a href="#" aria-label="Twitter">T</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Parallax effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const parallax = document.querySelector('.parallax');
+            for (let i = 0; i < 50; i++) {
+                let span = document.createElement('span');
+                span.style.top = Math.random() * 100 + '%';
+                span.style.left = Math.random() * 100 + '%';
+                span.style.width = Math.random() * 20 + 5 + 'px';
+                span.style.height = span.style.width;
+                span.style.animationDuration = Math.random() * 5 + 5 + 's';
+                span.style.animationDelay = Math.random() * 5 + 's';
+                parallax.appendChild(span);
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 0);
+        });
+
+        // Form submission (prevent default for demo)
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Booking submitted! We will contact you shortly to confirm your reservation.');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('.carousel-inner');
+            const items = document.querySelectorAll('.menu-item');
+            const prevButton = document.querySelector('.carousel-button-prev');
+            const nextButton = document.querySelector('.carousel-button-next');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                const itemWidth = items[0].offsetWidth;
+                carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+            }
+
+            function showPrevItem() {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                updateCarousel();
+            }
+
+            function showNextItem() {
+                currentIndex = (currentIndex + 1) % items.length;
+                updateCarousel();
+            }
+
+            prevButton.addEventListener('click', showPrevItem);
+            nextButton.addEventListener('click', showNextItem);
+
+            // Initial update
+            updateCarousel();
+
+            // Update on window resize
+            window.addEventListener('resize', updateCarousel);
+        });
+    </script>
+</body>
+</html>
