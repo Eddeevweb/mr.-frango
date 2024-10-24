@@ -232,7 +232,7 @@
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             const message = `New Order:\n\n${orderItems}\n\nTotal: $${total.toFixed(2)}\n\nCustomer Info:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}`;
 
-            const whatsappNumber = '25888427386'; // Replace with your WhatsApp number
+            const whatsappNumber = '258868427386'; // Replace with your WhatsApp number
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
 
