@@ -1,239 +1,250 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amantes de Carne</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Shopping Cart</title>
     <style>
-        /* Existing styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #000;
-            color: #fff;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
-        /* New styles for the menu carousel */
-        .menu {
-            background-color: #f3f4f6;
-            padding: 4rem 0;
+        h1, h2 {
+            color: #333;
         }
-
-        .menu h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.25rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #000;
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
         }
-
-        .carousel {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .carousel-inner {
-            display: flex;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .menu-item {
-            flex: 0 0 100%;
-            padding: 1rem;
-        }
-
         @media (min-width: 768px) {
-            .menu-item {
-                flex: 0 0 33.333%;
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
             }
         }
-
-        .menu-item-content {
-            background-color: #fff;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        @media (min-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
-
-        .menu-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
         }
-
-        .menu-item-body {
-            padding: 1rem;
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
         }
-
-        .menu-item h4 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #000;
+        .product h3 {
+            font-size: 0.9em;
+            margin: 10px 0 5px;
         }
-
-        .menu-item p {
-            color: #4b5563;
-            margin-bottom: 1rem;
+        .product p {
+            font-size: 0.8em;
+            margin: 5px 0;
         }
-
-        .menu-item-footer {
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
         }
-
-        .menu-item-price {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: #000;
+        .remove-btn {
+            background-color: #f44336;
         }
-
-        .menu-item-button {
-            background-color: #000;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .remove-btn:hover {
+            background-color: #da190b;
         }
-
-        .menu-item-button:hover {
-            background-color: #333;
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
         }
-
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        input[type="text"], input[type="tel"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
         }
-
-        .carousel-button:hover {
-            background-color: rgba(0, 0, 0, 0.7);
+        #message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
         }
-
-        .carousel-button-prev {
-            left: 1rem;
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        .carousel-button-next {
-            right: 1rem;
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
 <body>
-    <!-- Existing header and other sections -->
+    <div id="message"></div>
+    <div class="container">
+        <h1>Faça seu Pedido</h1>
+        <h2>No seu celular</h2>
+        <div id="product-list" class="product-grid"></div>
 
-    <section id="menu" class="menu">
-        <div class="container">
-            <h3>Cardápio</h3>
-            <div class="carousel">
-                <div class="carousel-inner">
-                    <div class="menu-item">
-                        <div class="menu-item-content">
-                            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Z3JlZWsrc2FsYWR8fHx8fHwxNjg2NzYyNTEx&ixlib=rb-4.0.3&q=80&w=1080" alt="Salada Grega">
-                            <div class="menu-item-body">
-                                <h4>Salada Grega</h4>
-                                <p>Legumes frescos, queijo feta suculento, azeite de oliva</p>
-                            </div>
-                            <div class="menu-item-footer">
-                                <span class="menu-item-price">R$ 25,00</span>
-                                <button class="menu-item-button">Pedir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-content">
-                            <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y2Flc2FyK3NhbGFkfHx8fHx8MTY4Njc2MjUzOA&ixlib=rb-4.0.3&q=80&w=1080" alt="Salada Caesar com Frango">
-                            <div class="menu-item-body">
-                                <h4>Salada Caesar com Frango</h4>
-                                <p>Folhas crocantes de alface, peito de frango tenro, molho Caesar</p>
-                            </div>
-                            <div class="menu-item-footer">
-                                <span class="menu-item-price">R$ 28,00</span>
-                                <button class="menu-item-button">Pedir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="menu-item-content">
-                            <img src="https://images.unsplash.com/photo-1547496502-affa22d38842?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZHVjaytzYWxhZHx8fHx8fDE2ODY3NjI1NjA&ixlib=rb-4.0.3&q=80&w=1080" alt="Salada Pato de Pequim">
-                            <div class="menu-item-body">
-                                <h4>Salada Pato de Pequim</h4>
-                                <p>Pato à Pequim, legumes frescos, molho picante</p>
-                            </div>
-                            <div class="menu-item-footer">
-                                <span class="menu-item-price">R$ 32,00</span>
-                                <button class="menu-item-button">Pedir</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-button carousel-button-prev">&lt;</button>
-                <button class="carousel-button carousel-button-next">&gt;</button>
-            </div>
-        </div>
-    </section>
+        <h2>Carrinho</h2>
+        <div id="cart"></div>
+        <p>Total: <span id="total">0.00</span> MZN</p>
 
-    <!-- Existing footer and other sections -->
+        <form id="customer-form">
+            <h2>Informações do Cliente</h2>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="phone">Telefone:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="address">Endereço:</label>
+            <textarea id="address" name="address" required></textarea>
+
+            <button type="button" onclick="sendOrder()">Enviar Pedido</button>
+        </form>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const carousel = document.querySelector('.carousel-inner');
-            const items = document.querySelectorAll('.menu-item');
-            const prevButton = document.querySelector('.carousel-button-prev');
-            const nextButton = document.querySelector('.carousel-button-next');
-            let currentIndex = 0;
+        const products = [
+            { id: 1, name: 'Cheese Burger', price: 120.99, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 2, name: 'Beef Burger', price: 110.99, image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 3, name: 'Chicken Burger', price: 149.99, image: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 4, name: 'Double Beef Burger', price: 199.99, image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 10, name: 'Spicy Chicken Burger', price: 114.99, image: 'https://images.unsplash.com/photo-1606755962773-d324e0a13086?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 11, name: 'Fries', price: 49.99, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 12, name: 'Onion Rings', price: 39.99, image: 'https://images.unsplash.com/photo-1639024471283-03518883512d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 13, name: 'Soda', price: 49.99, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 14, name: 'Milkshake', price: 59.99, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+            { id: 15, name: 'Salad', price: 30.99, image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&h=300&q=80' },
+        ];
 
-            function updateCarousel() {
-                const itemWidth = items[0].offsetWidth;
-                carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+        let cart = [];
+
+        function displayProducts() {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = products.map(product => `
+                <div class="product">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price.toFixed(2)} MZN</p>
+                    <button onclick="addToCart(${product.id})">Adicionar ao carrinho</button>
+                </div>
+            `).join('');
+        }
+
+        function showMessage(text, type) {
+            const messageElement = document.getElementById('message');
+            messageElement.innerHTML = `<div class="message ${type}">${text}</div>`;
+            setTimeout(() => {
+                messageElement.innerHTML = '';
+            }, 3000);
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCart();
+            showMessage(`${product.name} adicionado ao carrinho`, 'success');
+        }
+
+        function removeFromCart(index) {
+            const removedItem = cart[index];
+            cart.splice(index, 1);
+            updateCart();
+            showMessage(`${removedItem.name} removido do carrinho`, 'error');
+        }
+
+        function updateCart() {
+            const cartElement = document.getElementById('cart');
+            cartElement.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <span>${item.name} - ${item.price.toFixed(2)} MZN</span>
+                    <button class="remove-btn" onclick="removeFromCart(${index})">Remover</button>
+                </div>
+            `).join('');
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        function sendOrder() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            if (!name || !phone || !address) {
+                alert('Please fill in all customer information fields.');
+                return;
             }
 
-            function showPrevItem() {
-                currentIndex = (currentIndex - 1 + items.length) % items.length;
-                updateCarousel();
-            }
+            const orderItems = cart.map(item => `${item.name} - $${item.price.toFixed(2)}`).join('\n');
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const message = `New Order:\n\n${orderItems}\n\nTotal: $${total.toFixed(2)}\n\nCustomer Info:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}`;
 
-            function showNextItem() {
-                currentIndex = (currentIndex + 1) % items.length;
-                updateCarousel();
-            }
+            const whatsappNumber = '25888427386'; // Replace with your WhatsApp number
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
 
-            prevButton.addEventListener('click', showPrevItem);
-            nextButton.addEventListener('click', showNextItem);
+            // Clear cart and form
+            cart = [];
+            updateCart();
+            document.getElementById('customer-form').reset();
+            showMessage('Order sent successfully!', 'success');
+        }
 
-            // Initial update
-            updateCarousel();
-
-            // Update on window resize
-            window.addEventListener('resize', updateCarousel);
-        });
+        // Initialize the page
+        displayProducts();
     </script>
 </body>
 </html>
